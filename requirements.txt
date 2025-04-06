@@ -1,5 +1,13 @@
 numpy
-scikit-learn
 sentence_transformers
 scipy
 pandas
+spacy
+stanza
+nltk
+langdetect
+
+
+
+matplotlib
+seaborn
