@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import stanza
@@ -16,7 +16,7 @@ from sentence_transformers import SentenceTransformer
 from nltk.corpus import stopwords
 
 
-# In[ ]:
+# In[2]:
 
 
 # 🔹 Download & Load Stanza Greek Model
@@ -24,7 +24,7 @@ stanza.download('el')
 nlp_stanza = stanza.Pipeline(lang='el', processors='tokenize,pos,lemma')
 
 
-# In[ ]:
+# In[3]:
 
 
 # 🔹 Define Custom Stopwords BEFORE Stanza Processing
@@ -47,14 +47,14 @@ custom_word_mapping = {
 }
 
 
-# In[ ]:
+# In[4]:
 
 
 # 🔹 Dictionary to store word mappings (before → after lemmatization)
 word_mapping = defaultdict(set)
 
 
-# In[ ]:
+# In[5]:
 
 
 # ✅ **Preprocessing Function (Removes Stopwords + Applies Manual Remapping)**
@@ -95,15 +95,15 @@ def preprocess_text(text):
     return " ".join(lemmatized_text)
 
 
-# In[ ]:
+# In[6]:
 
 
 # 🔹 Load the dataset
-df = pd.read_csv("C:/Users/Katerina/Documents/Chatbot/Customer Utterances.csv")  
+df = pd.read_csv("C:/Users/Katerina/Documents/Chatbot/data/Customer Utterances.csv")  
 df["lemmatized_queries"] = df["Utterance"].apply(preprocess_text)  
 
 
-# In[ ]:
+# In[7]:
 
 
 # 🔹 Convert word mappings dictionary to a DataFrame
@@ -111,7 +111,7 @@ word_mapping_df = pd.DataFrame([(lemma, list(words)) for lemma, words in word_ma
                                columns=["Lemmatized_Word", "Original_Words"])
 
 
-# In[ ]:
+# In[8]:
 
 
 #  Sentence Embeddings with Sentence-BERT
@@ -119,7 +119,7 @@ model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
 embeddings = model.encode(df["lemmatized_queries"].tolist())
 
 
-# In[ ]:
+# In[9]:
 
 
 #  K-Means Clustering
@@ -161,7 +161,7 @@ plt.title("Silhouette Score Analysis")
 plt.show()
 
 
-# In[ ]:
+# In[10]:
 
 
 #  Perform final K-Means clustering using the best number of clusters
@@ -178,7 +178,7 @@ def predict_cluster(user_input):
     return cluster
 
 
-# In[ ]:
+# In[11]:
 
 
 # Function to Find Top 5 Most Frequent Words in Each Cluster
@@ -199,30 +199,31 @@ def get_top_words_per_cluster():
     return top_words_df
 
 
-# In[ ]:
+# In[12]:
 
 
 # 🔹 Save processed data and mappings
-df.to_csv("lemmatized_queries_with_clusters.csv", index=False)
-word_mapping_df.to_csv("lemmatization_mapping_stanza.csv", index=False)
+
 top_words_df = get_top_words_per_cluster()
-top_words_df.to_csv("top_words_per_cluster.csv", index=False)
+df.to_csv("../data/lemmatized_queries_with_clusters.csv", index=False)
+word_mapping_df.to_csv("../data/lemmatization_mapping_stanza.csv", index=False)
+top_words_df.to_csv("../data/top_words_per_cluster.csv", index=False)
 
 
-# In[ ]:
+# In[13]:
 
 
 # 🔹 Display the mapping DataFrame
 display(word_mapping_df)
 
 
-# In[ ]:
+# In[14]:
 
 
 display(top_words_df)
 
 
-# In[ ]:
+# In[15]:
 
 
 # 🔹 Show processed DataFrame
@@ -230,7 +231,7 @@ df.head()
 
 
 
-# In[ ]:
+# In[16]:
 
 
 # **Simple CLI for Testing**

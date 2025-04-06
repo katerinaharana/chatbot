@@ -1,17 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
-get_ipython().system('pip install spacy')
+get_ipython().system('pip install -r ../requirements.txt')
 
 
-# In[ ]:
+
+# In[2]:
 
 
-get_ipython().system('pip install langdetect')
-get_ipython().system('python -m spacy download el_core_news_sm')
+import spacy
+try:
+    nlp = spacy.load("el_core_news_sm")
+except:
+    import os
+    os.system("python -m spacy download el_core_news_sm")
+    nlp = spacy.load("el_core_news_sm")
+
+
+# In[3]:
 
 
 from sklearn.cluster import KMeans
@@ -24,26 +33,21 @@ import matplotlib.pyplot as plt
 import nltk
 import re
 import random
-import spacy
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import numpy as np
-
-from nltk.corpus import stopwords
-from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
 from langdetect import detect
 # Download NLTK resources
 nltk.download('stopwords')
 nltk.download('wordnet')
 
 
-# In[ ]:
+# In[4]:
 
 
-df = pd.read_csv('C:/Users/Katerina/Documents/Chatbot/Customer Utterances.csv')
+df = pd.read_csv('C:/Users/Katerina/Documents/Chatbot/data/Customer Utterances.csv')
 
 
 query_column = "Utterance"
@@ -81,16 +85,17 @@ def preprocess_text(text):
 
 
 
-# In[ ]:
+# In[5]:
 
 
 data = [preprocess_text(text) for text in queries]
 df["processed_queries"] = data
-df.to_csv("processed_queries.csv", index=False)
+df.to_csv("../data/processed_queries.csv", index=False)
+
 df
 
 
-# In[ ]:
+# In[6]:
 
 
 # Load Sentence-BERT model
@@ -114,7 +119,7 @@ plt.title('Elbow Method')
 plt.show()
 
 
-# In[ ]:
+# In[7]:
 
 
 from sklearn.metrics import silhouette_score
@@ -135,7 +140,7 @@ plt.title('Silhouette Method')
 plt.show()
 
 
-# In[ ]:
+# In[8]:
 
 
 # Check lemmatization for the first few queries
@@ -145,7 +150,7 @@ for query in data[:20
     print([token.lemma_ for token in doc])  # Print lemmatized words
 
 
-# In[ ]:
+# In[9]:
 
 
 num_clusters = 8
@@ -173,7 +178,7 @@ for cluster, keywords in top_keywords.items():
 
 
 
-# In[ ]:
+# In[10]:
 
 
 cluster_labels_mapping = {
@@ -188,7 +193,7 @@ cluster_labels_mapping = {
 }
 
 
-# In[ ]:
+# In[11]:
 
 
 # Simple CLI for testing
@@ -208,7 +213,7 @@ while True:
 
 
 
-# In[ ]:
+# In[12]:
 
 
 # View all rows of each cluster
