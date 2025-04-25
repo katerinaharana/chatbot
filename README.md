@@ -2,17 +2,17 @@
 
 This is a Natural Language Understanding (NLU) project written in Python, where I aim to build a chatbot that can intelligently respond to customer inquiries based on their utterances.
 
-> 🚧 **Note:** This project is still in development! I’m currently exploring two different NLP libraries: **spaCy** and **Stanza**. The code isn’t finalized yet, and I’m experimenting and learning as I go.
+>  **Note:** This project is still in development! I’m currently exploring two different NLP libraries: **spaCy** and **Stanza**. The code isn’t finalized yet, and I’m experimenting and learning as I go.
 
 ---
 
-## 🧠 Project Goal
+##  Project Goal
 
 The goal of this chatbot is to understand **customer utterances** from a dataset and provide appropriate responses. The bot doesn’t use predefined intents — instead, it learns patterns and clusters them based on semantic similarity.
 
 ---
 
-## 🗂️ What I'm Doing (Step-by-Step)
+##  What I'm Doing (Step-by-Step)
 
 1. **Preprocessing customer utterances** from a dataset
 2. **Tokenizing** the text using both **spaCy** and **Stanza**
@@ -25,7 +25,7 @@ The goal of this chatbot is to understand **customer utterances** from a dataset
 
 ---
 
-## 🧪 Approaches
+##  Approaches
 
 I'm testing two NLP pipelines:
 
